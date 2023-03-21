@@ -1,0 +1,257 @@
+@page "/producto"
+@page "/producto/{ProductoId:int}"
+
+@inject ProductoBLL productoBll
+@inject NotificationService notifications
+
+<EditForm Model="productos" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator />
+
+    <div class="card shadow-lg"
+        <div class="card align-items-center">
+            <div class="card-header align-items-center">
+                <h3 class="card-title">Registro de Productos
+                    <div class="oi oi-cart" ></div>
+                </h3>              
+            </div>
+
+            @*................... Buscar ...................*@
+
+            <div class="card-body">
+                <div class="form-group align-items-right">
+                    <div class="form-row" >
+                        <label>Producto Id</label>
+                        <div class="input-group" >
+                            <InputNumber @bind-Value="productos.ProductoId"  class="form-control col-4 col" />
+                            <div class="input-group-append col">
+                                <button type="button" class="btn btn-primary input-group-text "
+                                    @onclick="Buscar"><span class="oi oi-magnifying-glass"></span></button>
+                            </div>
+                        </div>
+                    </div>                 
+                </div>
+
+                <hr>
+                 
+                 @*................... Descripcion ...................*@
+
+                 <div class="row">
+                    <div class="form-group ">
+                        <label>Descripcion</label>
+                        <InputText class="form-control" @bind-Value="productos.Descripcion" placeholder="Descripción Producto"/>
+                        <ValidationMessage For="@(() => productos.Descripcion)" />
+                    </div>
+
+                     @*................... Costo ...................*@
+
+                    <div class="form-group mt-3 ">
+                        <label>Costo</label>
+                        <InputNumber class="form-control" @bind-Value="productos.Costo" />
+                        <ValidationMessage For="@(() => productos.Costo)" />
+                    </div>
+
+                    @*................... Existencia ...................*@
+
+                    <div class="form-group col ">
+                        <label>Existencia</label>
+                        <InputNumber class="form-control" @bind-Value="productos.Existencia"  />
+                        <ValidationMessage For="@(() => productos.Existencia)" />
+                    </div>
+
+                       @*................... Precio ...................*@
+
+                    <div class="form-group col">
+                        <label>Precio</label>
+                        <InputNumber class="form-control" @bind-Value="productos.Precio"  />
+                        <ValidationMessage For="@(() => productos.Precio)" />
+                    </div>
+
+                    @*................... Valor de Inventario ...................*@
+                    <div class="form-group col">
+                        <p class="text">Valor Inventario</p>                       
+                        <InputNumber readonly class="form-group col" placeholder="Disabled input" aria-label="Disabled input example" disabled @bind-Value="productos.ValorInventario" />
+                        <ValidationMessage For="@(() => productos.ValorInventario)" />
+                    </div>                                      
+                </div>
+                
+
+                @*.............................. Productos Detalle ..............................*@
+
+                <div class="card align-items-center">
+                    <div class="card-header align-items-center">
+                        <h3>Detalle</h3>
+                    </div>
+
+                    <form>
+                        <div class="input-group d-flex align-items-end">                
+
+                            @*................... Presentacion ...................*@
+
+                            <div class="form-group col">
+                                <label>Presentación</label>
+                                <InputText id="presentacion" class="form-control" 
+                                @bind-Value="Detalle.Descripcion" placeholder="Presentación del producto"/>
+                                <ValidationMessage For="@(() => Presentacion)" />
+                            </div>
+
+                            @*................... Cantidad ...................*@
+
+                            <div class="form-group col">
+                                <label>Cantidad</label>
+                                <InputNumber class="form-control" @bind-Value="Detalle.Cantidad" />
+                                <ValidationMessage For="@(() => Cantidad)" />                              
+                            </div>
+
+
+                            @*................... Agregar Detalle ...................*@
+
+                            <button type="button" class="btn btn-primary" @onclick="AgregarDetalle">                                
+                                <span class="oi oi-plus" >Agregar</span>
+                            </button>
+                        </div>
+                        
+                        <br>
+                        <table class="table table-secondary">
+                            <thead class="thead-dark">
+                                <tr class="table">
+                                    
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                </tr>
+                            </thead>
+                        <tbody>
+
+                              @if (productos.ProductoDetalle is not null)
+                              {
+
+                                @foreach (var item in productos.ProductoDetalle)
+                                {
+                                    <tr>
+                                        
+                                        <td>@item.Descripcion</td>
+                                        <td>@item.Cantidad</td>
+                                        <td><span class="btn btn-sm btn-outline-danger oi oi-ban" href="#" title='Remover Detalle' @onclick=" (() => RemoverDetalle(item)) "> </span></td>
+                                    </tr>
+
+                                    productos.Existencia -= Detalle.Cantidad;
+                                }
+                                
+                            }
+                        <div class="row justify-content-between">
+                        <div class="col-md-4">
+                            <label class="form-label">Total</label>
+                            <div class="input-group mb-3">
+                                <span class="form-control">@productos.Existencia</span>
+                            </div>
+                        </div>
+                        </div>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            
+    <div class="card-footer">
+
+    <div class="form-group text-center" display: inline-block>
+        
+        <button type="button" class="bi bi-file-earmark-fill btn btn-lg btn-primary" @onclick="Nuevo">
+        <span class="oi oi-file"> Nuevo</span></button>
+        <button type="submit" class="bi bi-file-earmark-text-fill btn btn-lg btn-success">
+        <span class="oi oi-cloud"> Guardar</span></button>
+        <button type="button" class="bi bi-trash btn btn-lg btn-danger" @onclick="Eliminar">
+        <span class="oi oi-trash"> Eliminar</span></button>
+
+    </div>
+
+            </div>
+        </div>
+    </div>
+
+</EditForm>
+
+@code {
+
+    #nullable disable
+
+    public string Presentacion { get; set; }
+    public int Cantidad { get; set; }
+    public decimal Precio { get; set; }
+
+    [Parameter]
+
+    public int productoId { get; set; }
+    public ProductoDetalle Detalle { get; set; } = new ProductoDetalle();
+    public Productos productos { get; set; } = new Productos();
+
+    protected override void OnInitialized()
+    {
+        productos.ProductoId = productoId;
+        Buscar();
+    }
+
+    public void Buscar()
+    {
+        if (this.productos.ProductoId > 0)
+        {
+            var encontrado = productoBll.Buscar(this.productos.ProductoId);
+            
+            if (encontrado != null)
+            {
+                this.productos = encontrado;
+                notifications.ShowNotification("Registro encontrado");
+            }
+            else
+            {          
+                notifications.ShowNotification("Registro no encontrado", NotificationSeverity.Error);
+            }      
+        }      
+    }
+    public void Nuevo()
+    {
+        productos = new Productos();   
+        this.productos.ProductoDetalle = new List<ProductoDetalle>();  
+    }
+    public void Guardar()
+    {
+        bool guardar = productoBll.Guardar(productos);
+
+        if (guardar)
+        {
+            this.productos = new Productos();
+            this.productos.ProductoDetalle = new List<ProductoDetalle>();
+            notifications.ShowNotification("Fue guardado correctamente.");
+        }
+        else
+        {
+            notifications.ShowNotification("No fue guardado, intentar nuevamente.", NotificationSeverity.Error);
+        }
+    }
+    private void CalculoValorInventario() // Calcular valor inventario
+    {
+        productos.ValorInventario = productos.Costo * productos.Existencia;      
+    }
+
+    public void Eliminar()
+    {
+        if (productoBll.Eliminar(productos.ProductoId))
+        {
+            this.productos = new Productos();
+            this.productos.ProductoDetalle = new List<ProductoDetalle>();
+            notifications.ShowNotification("Fue eliminado correctamente.");
+        }
+        else
+        {
+            notifications.ShowNotification("No fue eliminado, intentar nuevamente.", NotificationSeverity.Error);
+        }
+    }
+    public void AgregarDetalle()
+    {
+       this.productos.ProductoDetalle.Add(this.Detalle);
+        Detalle = new ProductoDetalle();
+    }
+    private void RemoverDetalle(ProductoDetalle item) 
+    {
+        this.productos.ProductoDetalle.Remove(item);
+    }  
+}

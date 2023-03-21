@@ -9,41 +9,49 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Parcial2_AP1Albert
 build_property.RootNamespace = Parcial2_AP1Albert
-build_property.ProjectDir = c:\Users\elpri\OneDrive\Desktop\Progamacion aplicada I\Parcial2_AP1Albert\
+build_property.ProjectDir = C:\Users\elpri\OneDrive\Desktop\Progamacion aplicada I\Parcial2_AP1Albert\
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = c:\Users\elpri\OneDrive\Desktop\Progamacion aplicada I\Parcial2_AP1Albert
+build_property.MSBuildProjectDirectory = C:\Users\elpri\OneDrive\Desktop\Progamacion aplicada I\Parcial2_AP1Albert
 build_property._RazorSourceGeneratorDebug = 
 
-[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Parcial2_AP1Albert/App.razor]
+[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Parcial2_AP1Albert/App.razor]
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Parcial2_AP1Albert/Pages/Index.razor]
+[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Parcial2_AP1Albert/Pages/Consultas/C_Productos.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29uc3VsdGFzXENfUHJvZHVjdG9zLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Parcial2_AP1Albert/Pages/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Parcial2_AP1Albert/Shared/SurveyPrompt.razor]
+[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Parcial2_AP1Albert/Pages/Registros/R_Productos.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVnaXN0cm9zXFJfUHJvZHVjdG9zLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Parcial2_AP1Albert/Shared/SurveyPrompt.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Parcial2_AP1Albert/_Imports.razor]
+[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Parcial2_AP1Albert/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Parcial2_AP1Albert/Shared/MainLayout.razor]
+[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Parcial2_AP1Albert/Shared/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-g93xpux75f
 
-[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Parcial2_AP1Albert/Shared/NavMenu.razor]
+[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Parcial2_AP1Albert/Shared/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-cxqccg1c0i
 
-[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Parcial2_AP1Albert/Pages/Error.cshtml]
+[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Parcial2_AP1Albert/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Parcial2_AP1Albert/Pages/_Host.cshtml]
+[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Parcial2_AP1Albert/Pages/_Host.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
