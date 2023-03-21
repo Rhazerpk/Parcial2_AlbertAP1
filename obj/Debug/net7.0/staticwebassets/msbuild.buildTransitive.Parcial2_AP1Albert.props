@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\Parcial2_AP1Albert.props" />
-</Project>
