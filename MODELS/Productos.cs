@@ -14,8 +14,6 @@ public class Productos{
     public float Precio { get; set; }
     [Required(ErrorMessage = "Es obligatorio introducir la existencia del producto")]
     public float Existencia { get; set; }
-    public float ValorInventario { get; set; }
-
     public Productos() { Descripcion = string.Empty; }
 
     [ForeignKey("ProductoId")]

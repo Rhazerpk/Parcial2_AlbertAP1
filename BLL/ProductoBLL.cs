@@ -30,9 +30,8 @@ public class ProductoBLL
         return encontrado;
     }
 
-    public  bool Guardar(Productos producto) 
+    public bool Guardar(Productos producto) 
     {  
-        producto.ValorInventario = producto.Costo * producto.Existencia;
         
         if (!Existe(producto.ProductoId))
         {
@@ -73,7 +72,6 @@ public class ProductoBLL
         bool paso = false;
 
         try{
-            
                 _contexto.producto.Add(producto);
                 paso = _contexto.SaveChanges() > 0;
 
@@ -103,7 +101,7 @@ public class ProductoBLL
         return producto;
     }
 
-        public bool Eliminar(int Id) 
+    public bool Eliminar(int Id) 
     {
         bool paso = false;
 
@@ -116,6 +114,7 @@ public class ProductoBLL
                 _contexto.producto.Remove(producto);
                 paso = _contexto.SaveChanges() > 0;
             }
+            
         }
         catch (Exception)
         {
@@ -144,6 +143,11 @@ public class ProductoBLL
         }
         return lista;
     }
+    public List<Productos> GetLista()
+    {
+        return _contexto.producto.ToList();
+    }
+
     
 }
     

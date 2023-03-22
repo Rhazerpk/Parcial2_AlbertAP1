@@ -1,0 +1,91 @@
+@page "/C_Empacados"
+
+@inject ProductoEmpacadosBLL empacadosBll
+
+<EditForm Model="lista">
+    <div class="card">
+        <div class="card-header">
+            <h4>Consulta de productos empacados
+                <div class="  oi oi-spreadsheet" >
+                 </div>
+            </h4>
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="input-group d-flex align-items-end">
+                    <InputSelect class="form-select text-14" @bind-Value="filtro">
+                        <option disabled value>Seleccione un filtro de busqueda</option>    
+                        <option value="0">Id</option>  
+                    </InputSelect>
+                   <div class="flex-fill mx-2">
+                        <label>Criterio</label>
+                        <InputText class="form-control" @bind-Value="Criterio" placeholder="Ingrese el criterio de busqueda" />
+                    </div>                  
+                    <button type="button" class="btn btn-lg btn-primary" @onclick="Consultar"><span
+                            class="oi oi-list"></span> Consultar</button>
+
+                </div>
+            </form>
+        </div>          
+    </div>
+
+        <table class="table table-light table-striped table-bordered">
+            <thead class="thead">
+                <tr class="table">
+                    <th>ID</th>
+                    <th>Concepto</th>
+                    <th>Ver</th>                                
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in lista)
+                {
+                    <tr>
+                        <td>@item.EmpacadosId</td>
+                        <td>@item.Concepto</td>
+                        <td><a class="btn btn-sm btn-outline-primary oi oi-eye" href="Empacados/@item.EmpacadosId"></a>
+                        </td>                      
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+
+</EditForm>
+
+@code {
+
+    #nullable disable 
+    public string filtro { get; set; } 
+    public string Criterio { get; set; } 
+    public List<ProductoEmpacados> lista { get; set; } = new List<ProductoEmpacados>();
+
+    [Parameter]
+    public EmpacadosDetalle empacadosDetalle {get; set; } = new EmpacadosDetalle();
+    
+    private void Consultar()
+    {
+              
+        if(lista != null)
+        {
+            lista = empacadosBll.GetList(p => true);
+        }
+        
+        if (Criterio != null)
+        {
+            switch (filtro)
+            {
+                case "0":
+                lista = empacadosBll.GetList(p => p.EmpacadosId == int.Parse(Criterio));
+                break;
+            }
+        }
+        else
+        {
+            lista = empacadosBll.GetList(p => true);
+        }
+        
+    }
+    
+}

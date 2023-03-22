@@ -18,9 +18,7 @@
                 <div class="input-group d-flex align-items-end">
                     
                     <InputSelect class="form-select text-14" @bind-Value="Filtro">
-                    
                         <option disabled value>Seleccione un filtro de busqueda</option>
-                        
                         <option value="0">Id</option>
                         <option value="1">Descripcion</option>
                     </InputSelect>
@@ -42,15 +40,11 @@
          <table class="table table-light table-striped table-bordered">
             <thead class="thead">
                 <tr class="table">
-
-                    <th>Id</th>
+                    <th>ID</th>
                     <th>Descripción</th>
                     <th>Existencia</th>     
                     <th>Costo</th>  
-                    <th>Precio</th>          
-                    <th>Valor Inventario</th>                       
-                    <th>Ver</th>
-                    
+                    <th>Precio</th>                                
                 </tr>
             </thead>
           <tbody>
@@ -62,22 +56,13 @@
                         <td>@item.Existencia</td>
                         <td>RD$ @item.Costo</td>
                         <td>RD$ @item.Precio</td>
-                        <td>RD$ @item.ValorInventario</td>
-
-                         <td><a class="btn btn-sm btn-outline-success oi oi-eye" href="R_Productos/@item.ProductoId"></a>
-                        </td>
                     </tr>
                     
-                }
-                
-            </tbody>
-            
+                }         
+            </tbody>          
         </table>
     
-  
 </EditForm>
-
-
 
 @code{
 
