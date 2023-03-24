@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Parcial2_AP1Albert.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20230322055317_Inicial")]
+    [Migration("20230324082954_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
@@ -23,6 +23,9 @@ namespace Parcial2_AP1Albert.Migrations
                     b.Property<int>("EmpacadosDetalleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<float>("Cantidad")
+                        .HasColumnType("REAL");
 
                     b.Property<int>("EmpacadosId")
                         .HasColumnType("INTEGER");
@@ -70,11 +73,8 @@ namespace Parcial2_AP1Albert.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<float>("CantidadProducida")
-                        .HasColumnType("REAL");
-
-                    b.Property<float>("CantidadUtilizada")
-                        .HasColumnType("REAL");
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Concepto")
                         .IsRequired()

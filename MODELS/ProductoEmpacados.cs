@@ -13,12 +13,8 @@ public class ProductoEmpacados{
     public string? Concepto { get; set; }
 
     [Required]
-    [Range(1, float.MaxValue, ErrorMessage = "Campo obligatorio. Ingrese la cantidad utilizada del producto")]
-    public float CantidadUtilizada {get; set;} 
-
-    [Required]
-    [Range(1, float.MaxValue, ErrorMessage = "Campo obligatorio. Ingrese la cantidad a producir del producto")]
-    public float CantidadProducida {get; set;} 
+    [Range(0, int.MaxValue, ErrorMessage = "Campo obligatorio. Ingrese la cantidad")]
+    public int Cantidad {get; set;} 
 
     [ForeignKey("EmpacadosId")]
     public virtual List<EmpacadosDetalle> EmpacadosDetalle { get; set; } = new List<EmpacadosDetalle>();

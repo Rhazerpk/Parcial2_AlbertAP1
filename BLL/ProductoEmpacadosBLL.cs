@@ -49,7 +49,7 @@ public class ProductoEmpacadosBLL{
 
     }
 
-    public bool Insertar(ProductoEmpacados productoEmpacado)
+    public async Task<bool> Insertar(ProductoEmpacados productoEmpacado)
     {
         
         bool paso = false;
@@ -62,7 +62,7 @@ public class ProductoEmpacadosBLL{
                 _contexto.Entry(item).State = EntityState.Added;
                 _contexto.Entry(item.producto).State = EntityState.Modified;
 
-                item.producto.Existencia -= productoEmpacado.CantidadUtilizada;
+                item.producto.Existencia -= item.Cantidad;
             }
 
             var itemm = _contexto.producto.Find(productoEmpacado.ProductoId); 
@@ -70,7 +70,7 @@ public class ProductoEmpacadosBLL{
             if(itemm != null)
             {
                 
-                itemm.Existencia += productoEmpacado.CantidadProducida;
+                itemm.Existencia += productoEmpacado.Cantidad;
                 
             }
                 _contexto.Empacados.Add(productoEmpacado);
@@ -85,18 +85,18 @@ public class ProductoEmpacadosBLL{
         return paso;
     }
 
-    public bool Guardar(ProductoEmpacados productoEmpacado)
+    public async Task<bool> Guardar(ProductoEmpacados productoEmpacado)
     {         
         if (!Existe(productoEmpacado.EmpacadosId))
         {
-            return  Insertar(productoEmpacado);
+            return  await Insertar(productoEmpacado);
         }
         else
         {
-            return Modificar(productoEmpacado);
+            return await Modificar(productoEmpacado);
         }
     }
-    public bool Modificar(ProductoEmpacados productoEmpacado) 
+    public async Task<bool> Modificar(ProductoEmpacados productoEmpacado) 
     {
         bool paso = false;
 
@@ -114,7 +114,7 @@ public class ProductoEmpacadosBLL{
 
             foreach (var item in lista.EmpacadosDetalle)
             {
-                item.producto.Existencia += productoEmpacado.CantidadUtilizada; 
+                item.producto.Existencia += item.Cantidad; 
             }
                 
             var _item = _contexto.producto.Find(productoEmpacado.ProductoId);
@@ -122,7 +122,7 @@ public class ProductoEmpacadosBLL{
             if(_item != null)
             {
 
-                _item.Existencia -= productoEmpacado.CantidadProducida; 
+                _item.Existencia -= productoEmpacado.Cantidad; 
 
             }
 
@@ -134,7 +134,7 @@ public class ProductoEmpacadosBLL{
             _contexto.Entry(item).State = EntityState.Added;
             _contexto.Entry(item.producto).State = EntityState.Modified;
 
-            item.producto.Existencia -= productoEmpacado.CantidadUtilizada;
+            item.producto.Existencia -= item.Cantidad;
 
         }
 
@@ -142,7 +142,7 @@ public class ProductoEmpacadosBLL{
 
         if(producido != null)
         {
-            producido.Existencia += productoEmpacado.CantidadProducida; 
+            producido.Existencia += productoEmpacado.Cantidad; 
             
         }
 
@@ -175,7 +175,7 @@ public class ProductoEmpacadosBLL{
             if(item != null)
             {
 
-                item.Existencia -= entradaEmpacado.CantidadProducida;
+                item.Existencia -= entradaEmpacado.Cantidad;
 
             }
 
@@ -183,7 +183,8 @@ public class ProductoEmpacadosBLL{
             {
                 _contexto.Entry(itemm.entradaEmpacado).State = EntityState.Modified;
                 _contexto.Entry(itemm.producto).State = EntityState.Modified;
-                itemm.producto.Existencia += entradaEmpacado.CantidadUtilizada;
+
+                itemm.producto.Existencia += itemm.Cantidad;
             }
 
                 _contexto.Empacados.Remove(entradaEmpacado);

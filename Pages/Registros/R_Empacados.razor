@@ -58,7 +58,7 @@
                             <div class="form-group col ">
                         <label>Producto</label>
                           <InputSelect class="form-select text-14" @bind-Value="IdProducto"> 
-                            <option disabled value="">   Seleccione un producto   </option>
+                            <option value="" selected="selected" disabled="disabled" hidden="hidden">Seleccione un producto</option>
                             @foreach (var item in ListaProducts) 
                             {
                                 <option value="@item.ProductoId.ToString()" >@item.Descripcion</option>                                 
@@ -71,8 +71,8 @@
 
                             <div class="form-group col">
                                 <label>Cantidad</label>
-                                <InputNumber class="form-control" @bind-Value="productoEmpacados.CantidadUtilizada" />
-                                <ValidationMessage For="@(() => productoEmpacados.CantidadUtilizada)" />                              
+                                <InputNumber class="form-control" @bind-Value="empacadosDetalle.Cantidad" />
+                                <ValidationMessage For="@(() => empacadosDetalle.Cantidad)" />                              
                             </div>
 
                             @*................... Agregar Detalle ...................*@
@@ -100,7 +100,7 @@
                                 
                                 <td>@item.EmpacadosDetalleId</td>
                                  <td>@item.producto.Descripcion</td> 
-                                <td>@productoEmpacados.CantidadUtilizada</td>
+                                <td>@item.Cantidad</td>
 
                                 <td><span class="btn btn-sm btn-outline-danger oi oi-ban" href="#" title='Remover Detalle' @onclick=" (() => RemoverDetalle(item)) "> </span></td>
                             </tr>
@@ -134,8 +134,8 @@
                             @*................... Cantidad Producidos ...................*@
                     <div class="form-group col">
                         <label>Cantidad</label>
-                        <InputNumber class="form-control" @bind-Value="productoEmpacados.CantidadProducida"/>
-                        <ValidationMessage For="@(() => productoEmpacados.CantidadProducida)" />
+                        <InputNumber class="form-control" @bind-Value="productoEmpacados.Cantidad"/>
+                        <ValidationMessage For="@(() => productoEmpacados.Cantidad)" />
                 
                 </div>
             </div>                  
@@ -173,7 +173,7 @@
     public EmpacadosDetalle empacadosDetalle { get; set; } = new EmpacadosDetalle();
     public List<Productos> ListaProducts { get; set; } = new List<Productos>(); 
     public Productos producto { get; set; } = new Productos();
-    public string IdProducto { get; set; }
+    public string IdProducto { get; set; } = "";
 
     protected override void OnInitialized()
     {
@@ -208,10 +208,11 @@
         notifications.ShowNotification("Nueva Plantilla", NotificationSeverity.Info);  
   
     }
-    public void Guardar() 
+    public async Task Guardar() 
     {
-    
-        if (productoEmpacadosBll.Guardar(productoEmpacados))
+        var guardo = await productoEmpacadosBll.Guardar(productoEmpacados);
+        
+        if (guardo)
         {
 
             this.productoEmpacados = new ProductoEmpacados(); 
@@ -247,21 +248,27 @@
 
         this.producto = productoBll
         .Buscar(Utility.ToInt(IdProducto));
-
-        this.empacadosDetalle.producto = producto;
-        this.empacadosDetalle.EmpacadosDetalleId = producto.ProductoId; 
-        this.productoEmpacados.CantidadUtilizada = productoEmpacados.CantidadUtilizada;
+        this.empacadosDetalle.producto = (producto != null) ? producto : new Productos();
+        this.empacadosDetalle.EmpacadosDetalleId = (producto != null) ? producto.ProductoId : 0;
         
-        bool existe = productoEmpacados
-        .EmpacadosDetalle.Any(p => p
-        .EmpacadosDetalleId == empacadosDetalle
-        .EmpacadosDetalleId);
+        bool existe = productoEmpacados.EmpacadosDetalle.Any(p => p.EmpacadosDetalleId == empacadosDetalle.EmpacadosDetalleId);
 
         if (!existe) 
         {
 
-        this.productoEmpacados.EmpacadosDetalle.Add(this.empacadosDetalle); 
+            this.productoEmpacados.EmpacadosDetalle.Add(this.empacadosDetalle); 
 
+        }
+        else
+        {
+            var _find = productoEmpacados.EmpacadosDetalle.Find(p => p.EmpacadosDetalleId == empacadosDetalle.EmpacadosDetalleId);
+
+            if(_find!=null)
+            {
+                empacadosDetalle.Cantidad += _find.Cantidad;
+                this.productoEmpacados.EmpacadosDetalle.Remove(_find);
+                this.productoEmpacados.EmpacadosDetalle.Add(this.empacadosDetalle);
+            }
         }
         
         this.empacadosDetalle = new EmpacadosDetalle();
@@ -272,6 +279,7 @@
     {
 
         this.productoEmpacados.EmpacadosDetalle.Remove(item);
+        
     }
 
 }

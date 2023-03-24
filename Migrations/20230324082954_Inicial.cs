@@ -20,8 +20,7 @@ namespace Parcial2_AP1Albert.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     ProductoId = table.Column<int>(type: "INTEGER", nullable: false),
                     Concepto = table.Column<string>(type: "TEXT", nullable: false),
-                    CantidadUtilizada = table.Column<float>(type: "REAL", nullable: false),
-                    CantidadProducida = table.Column<float>(type: "REAL", nullable: false)
+                    Cantidad = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -50,6 +49,7 @@ namespace Parcial2_AP1Albert.Migrations
                 {
                     EmpacadosDetalleId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    Cantidad = table.Column<float>(type: "REAL", nullable: false),
                     EmpacadosId = table.Column<int>(type: "INTEGER", nullable: false),
                     ProductoId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
