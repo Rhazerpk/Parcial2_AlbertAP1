@@ -77,7 +77,7 @@ namespace Parcial2_AP1Albert.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     ProductoId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Descripcion = table.Column<string>(type: "TEXT", nullable: true),
+                    Presentacion = table.Column<string>(type: "TEXT", nullable: true),
                     Cantidad = table.Column<float>(type: "REAL", nullable: false),
                     Precio = table.Column<float>(type: "REAL", nullable: false)
                 },

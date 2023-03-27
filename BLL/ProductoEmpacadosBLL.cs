@@ -49,7 +49,7 @@ public class ProductoEmpacadosBLL{
 
     }
 
-    public async Task<bool> Insertar(ProductoEmpacados productoEmpacado)
+    public bool Insertar(ProductoEmpacados productoEmpacado)
     {
         
         bool paso = false;
@@ -85,18 +85,18 @@ public class ProductoEmpacadosBLL{
         return paso;
     }
 
-    public async Task<bool> Guardar(ProductoEmpacados productoEmpacado)
+    public bool Guardar(ProductoEmpacados productoEmpacado)
     {         
         if (!Existe(productoEmpacado.EmpacadosId))
         {
-            return  await Insertar(productoEmpacado);
+            return Insertar(productoEmpacado);
         }
         else
         {
-            return await Modificar(productoEmpacado);
+            return Modificar(productoEmpacado);
         }
     }
-    public async Task<bool> Modificar(ProductoEmpacados productoEmpacado) 
+    public bool Modificar(ProductoEmpacados productoEmpacado) 
     {
         bool paso = false;
 
@@ -111,20 +111,17 @@ public class ProductoEmpacadosBLL{
 
         if(lista != null)
         {
-
-            foreach (var item in lista.EmpacadosDetalle)
-            {
-                item.producto.Existencia += item.Cantidad; 
-            }
                 
             var _item = _contexto.producto.Find(productoEmpacado.ProductoId);
 
             if(_item != null)
             {
 
-                _item.Existencia -= productoEmpacado.Cantidad; 
+                _item.Existencia += productoEmpacado.Cantidad; 
 
             }
+
+            _contexto.Entry(lista).State = EntityState.Detached;
 
         _contexto.Database.ExecuteSqlRaw($"Delete FROM EmpacadosDetalle where EmpacadosId={productoEmpacado.EmpacadosId}");
 
@@ -148,6 +145,7 @@ public class ProductoEmpacadosBLL{
 
             _contexto.Entry(productoEmpacado).State = EntityState.Modified;
             paso = _contexto.SaveChanges() > 0;
+            _contexto.Entry(productoEmpacado).State = EntityState.Detached;
         }
 
         }

@@ -208,9 +208,9 @@
         notifications.ShowNotification("Nueva Plantilla", NotificationSeverity.Info);  
   
     }
-    public async Task Guardar() 
+    public void Guardar() 
     {
-        var guardo = await productoEmpacadosBll.Guardar(productoEmpacados);
+        var guardo = productoEmpacadosBll.Guardar(productoEmpacados);
         
         if (guardo)
         {

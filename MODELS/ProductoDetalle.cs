@@ -6,16 +6,16 @@ public class ProductoDetalle{
     [Key]
     public int Id { get; set; }
     public int ProductoId { get; set; }
-    public string Descripcion { get; set; }
+    public string Presentacion { get; set; }
     public float Cantidad { get; set; }
     public float Precio { get; set; }
     public Productos producto { get; set; } = new Productos();
     public ProductoDetalle(){}
 
-    public ProductoDetalle(string descripcion, float cantidad, float precio)
+    public ProductoDetalle(string presentacion, float cantidad, float precio)
     {
         
-        this.Descripcion = descripcion;
+        this.Presentacion = presentacion;
         this.Cantidad = cantidad;
         this.Precio = precio;
     }

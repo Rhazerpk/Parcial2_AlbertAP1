@@ -48,11 +48,11 @@ namespace Parcial2_AP1Albert.Migrations
                     b.Property<float>("Cantidad")
                         .HasColumnType("REAL");
 
-                    b.Property<string>("Descripcion")
-                        .HasColumnType("TEXT");
-
                     b.Property<float>("Precio")
                         .HasColumnType("REAL");
+
+                    b.Property<string>("Presentacion")
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("ProductoId")
                         .HasColumnType("INTEGER");
