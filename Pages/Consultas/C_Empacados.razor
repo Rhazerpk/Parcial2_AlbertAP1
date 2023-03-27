@@ -3,55 +3,80 @@
 @inject ProductoEmpacadosBLL empacadosBll
 
 <EditForm Model="lista">
-    <div class="card">
+    <div class="card ">    
+    
         <div class="card-header">
-            <h4>Consulta de productos empacados
-                <div class="  oi oi-spreadsheet" >
-                 </div>
+            <h4>Consulta Empacados
+                  <div class="oi oi-spreadsheet"></div>
             </h4>
         </div>
-        <div class="card-body">
+  
+       <div class="card-body">
             <form>
                 <div class="input-group d-flex align-items-end">
-                    <InputSelect class="form-select text-14" @bind-Value="filtro">
-                        <option disabled value>Seleccione un filtro de busqueda</option>    
-                        <option value="0">Id</option>  
-                    </InputSelect>
-                   <div class="flex-fill mx-2">
-                        <label>Criterio</label>
-                        <InputText class="form-control" @bind-Value="Criterio" placeholder="Ingrese el criterio de busqueda" />
-                    </div>                  
-                    <button type="button" class="btn btn-lg btn-primary" @onclick="Consultar"><span
-                            class="oi oi-list"></span> Consultar</button>
 
+                  <div class="form-group col-md-3">
+                  <InputSelect class="form-select text-14" @bind-Value="filtro">                
+                        <option value="0" disabled selected>Seleccione un filtro</option>                   
+                        <option value="0">Id</option>
+                        <option value="1">Concepto</option>
+                             
+                    </InputSelect>
+                    </div>
+               <div class="Form-group col-md-1"></div>
+    
+                   <div class="Form-group col-3" >
+                        <label>Criterio</label>
+                        <InputText class="form-control" @bind-Value="Criterio" placeholder="Ingrese el criterio de busqueda"  />
+                    </div>
+
+                    <button type="button" class="btn btn-primary" @onclick="Consultar">
+                        <i class="oi oi-list" /> Consultar
+                    </button>                   
+                </div>
+             <hr>
+
+                <div class="row">
+
+                     <div class="Form-group col-2" >
+                        <span class="form-group ">Desde</span>
+                        <InputDate @bind-Value="fechaDesde" class="form-control" />
+                    </div>
+
+                
+                    <div class="Form-group col-2" >
+                        <span class="form-group">Hasta</span>
+                        <InputDate @bind-Value="fechaHasta" class="form-control"/>
+                    </div>
                 </div>
             </form>
-        </div>          
-    </div>
-
-        <table class="table table-light table-striped table-bordered">
+        </div>
+    
+         <table class="table table-light table-striped table-bordered">
             <thead class="thead">
                 <tr class="table">
-                    <th>ID</th>
-                    <th>Concepto</th>
-                    <th>Ver</th>                                
+
+                    <th>Id</th>
+                    <th>Concepto</th>   
+                    <th>Fecha</th>     
+                    <th>Ver</th>                 
                 </tr>
             </thead>
-            <tbody>
+          <tbody>
                 @foreach (var item in lista)
                 {
+                    Fecha = DateOnly.FromDateTime(item.Fecha);
                     <tr>
-                        <td>@item.EmpacadosId</td>
-                        <td>@item.Concepto</td>
-                        <td><a class="btn btn-sm btn-outline-primary oi oi-eye" href="Empacados/@item.EmpacadosId"></a>
-                        </td>                      
-                    </tr>
-                }
-            </tbody>
-
+                        <td>@item.EmpacadosId</td>                      
+                        <td>@item.Concepto</td>                      
+                        <td>@item.Fecha</td>                                       
+                         <td><a class="btn btn-sm btn-outline-primary oi oi-eye" href="Empacados/@item.EmpacadosId"></a>
+                        </td>
+                    </tr>                   
+                }          
+            </tbody>         
         </table>
-
-
+ </div>
 </EditForm>
 
 @code {
@@ -59,33 +84,49 @@
     #nullable disable 
     public string filtro { get; set; } 
     public string Criterio { get; set; } 
+    private DateTime fechaDesde { get; set; } = new DateTime(2000, 08, 2);
+    private DateTime fechaHasta { get; set; } = DateTime.Today;
+    private DateOnly Fecha { get; set; }
     public List<ProductoEmpacados> lista { get; set; } = new List<ProductoEmpacados>();
+    public ProductoEmpacados empacados { get; set; }
 
     [Parameter]
     public EmpacadosDetalle empacadosDetalle {get; set; } = new EmpacadosDetalle();
+
     
+    protected override void OnInitialized()
+    {
+        filtro = "0";
+        lista = empacadosBll.GetList(e => true);
+    }
     private void Consultar()
     {
-              
-        if(lista != null)
-        {
-            lista = empacadosBll.GetList(p => true);
-        }
-        
+        lista = new List<ProductoEmpacados>();
+        empacados = new ProductoEmpacados();
+
         if (Criterio != null)
         {
             switch (filtro)
             {
-                case "0":
-                lista = empacadosBll.GetList(p => p.EmpacadosId == int.Parse(Criterio));
-                break;
+                case "0": 
+                    
+
+                    lista = empacadosBll.GetList(e => e.EmpacadosId == int.Parse(Criterio));
+                    break;
+
+                case "1": 
+                   
+                    
+                        lista = empacadosBll.GetList(p => p.Concepto.ToLower().Contains(Criterio.ToLower()));
+                  
+                    break;
+                
             }
         }
         else
         {
-            lista = empacadosBll.GetList(p => true);
+            lista = empacadosBll.GetList(e => e.Fecha >= fechaDesde && e.Fecha <= fechaHasta);
         }
-        
     }
     
 }

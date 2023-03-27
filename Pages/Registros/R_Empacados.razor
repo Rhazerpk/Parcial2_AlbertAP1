@@ -8,7 +8,7 @@
 <EditForm Model="productoEmpacados" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
 
-    <div class="card shadow-lg"
+    <div class="card-body"
         <div class="card align-items-center">
             <div class="card-header align-items-center">
                 <h3 class="card-title">Entrada de productos Empacados
@@ -33,6 +33,13 @@
                 </div>
 
                 <hr>
+
+                @*................... Fecha ...................*@
+                <div class="row">
+                <div class="form-group">
+                    <label class="form-label">Fecha</label>
+                    <InputDate class="form-control"@bind-Value="productoEmpacados.Fecha" />                  
+                </div>
                  
                  @*................... Concepto ...................*@
 
@@ -156,6 +163,7 @@
         <button type="button" class="bi bi-trash btn btn-lg btn-danger" @onclick="Eliminar">
         <span class="oi oi-trash"> Eliminar</span></button>
 
+                </div>
             </div>
         </div>
     </div>
