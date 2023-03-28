@@ -263,8 +263,17 @@
 
         if (!existe) 
         {
+            if (empacadosDetalle.Cantidad <= producto?.Existencia)
+            {
 
-            this.productoEmpacados.EmpacadosDetalle.Add(this.empacadosDetalle); 
+                this.productoEmpacados.EmpacadosDetalle.Add(this.empacadosDetalle); 
+                notifications.ShowNotification("Agregado.", NotificationSeverity.Success);
+            }
+            else
+            {
+                notifications.ShowNotification("La cantidad excede de la existencia del producto.", NotificationSeverity.Error);
+            }
+            
 
         }
         else
