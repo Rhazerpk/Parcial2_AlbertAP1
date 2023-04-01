@@ -134,32 +134,32 @@ public class ProductoEmpacadosBLL{
 
         }
         
-            _contexto.Database.ExecuteSqlRaw($"Delete FROM EmpacadosDetalle where EmpacadosId={productoEmpacado.EmpacadosId}");
+        _contexto.Database.ExecuteSqlRaw($"Delete FROM EmpacadosDetalle where EmpacadosId={productoEmpacado.EmpacadosId}");
 
-            foreach(var nuevo in productoEmpacado.EmpacadosDetalle)
+        foreach(var nuevo in productoEmpacado.EmpacadosDetalle)
+        {
+            var producto = _contexto.producto.Find(nuevo.EmpacadosDetalleId);
+
+            if(producto != null)
             {
-                var producto = _contexto.producto.Find(nuevo.EmpacadosDetalleId);
-
-                if(producto != null)
-                {
-                    producto.Existencia -= nuevo.Cantidad;
-                    _contexto.Entry(nuevo).State = EntityState.Added;
-                }
+                producto.Existencia -= nuevo.Cantidad;
+                _contexto.Entry(nuevo).State = EntityState.Added;
             }
+        }
 
-            var _item = _contexto.producto.Find(productoEmpacado.ProductoId);
+        var _item = _contexto.producto.Find(productoEmpacado.ProductoId);
 
-            if(_item != null)
-            {
+        if(_item != null)
+        {
 
-                _item.Existencia += productoEmpacado.Cantidad; 
-                _contexto.Entry(_item).State = EntityState.Modified;
+            _item.Existencia += productoEmpacado.Cantidad; 
+            _contexto.Entry(_item).State = EntityState.Modified;
 
-            }
+        }
 
-            _contexto.Entry(productoEmpacado).State = EntityState.Modified;
-            paso = _contexto.SaveChanges() > 0;
-            _contexto.Entry(productoEmpacado).State = EntityState.Detached;
+        _contexto.Entry(productoEmpacado).State = EntityState.Modified;
+        paso = _contexto.SaveChanges() > 0;
+        _contexto.Entry(productoEmpacado).State = EntityState.Detached;
         
         }
         catch (Exception)

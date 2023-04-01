@@ -264,7 +264,11 @@
 
         if (!existe) 
         {
-            if (empacadosDetalle.Cantidad <= producto?.Existencia)
+            if(empacadosDetalle.Cantidad <= 0)
+            {
+                notifications.ShowNotification("La cantidad tiene que ser mayor que 0.", NotificationSeverity.Error);
+            }
+            else if (empacadosDetalle.Cantidad <= producto?.Existencia)
             {
 
                 this.productoEmpacados.EmpacadosDetalle.Add(this.empacadosDetalle); 
@@ -275,13 +279,12 @@
                 notifications.ShowNotification("La cantidad excede de la existencia del producto.", NotificationSeverity.Error);
             }
             
-
         }
         else
         {
             var _find = productoEmpacados.EmpacadosDetalle.Find(p => p.EmpacadosDetalleId == empacadosDetalle.EmpacadosDetalleId);
 
-            if(_find!=null)
+            if(_find != null)
             {
                 empacadosDetalle.Cantidad += _find.Cantidad;
                 this.productoEmpacados.EmpacadosDetalle.Remove(_find);
