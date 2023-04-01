@@ -166,44 +166,41 @@ public class ProductoEmpacadosBLL{
         {
             throw;
         }
+
         return paso;
 
     }
 
 
-    public bool Eliminar(int id) 
+    public bool Eliminar(ProductoEmpacados empacados) 
     {
         bool paso = false;
 
         try
         {
-            
-        var entradaEmpacado = _contexto.Empacados.Find(id);
+        
+        foreach(var item in empacados.EmpacadosDetalle)
+        {
+            var producto = _contexto.producto.Find(item.ProductoId);
 
-        if (entradaEmpacado != null)
-        {      
-
-            var item = _contexto.producto.Find(entradaEmpacado.ProductoId);
-            if(item != null)
+            if(producto != null)
             {
-
-                item.Existencia -= entradaEmpacado.Cantidad;
-
+                producto.Existencia += item.Cantidad;
+                _contexto.Entry(producto).State = EntityState.Modified;
             }
-
-            foreach (var itemm in entradaEmpacado.EmpacadosDetalle)
-            {
-                _contexto.Entry(itemm.entradaEmpacado).State = EntityState.Modified;
-                _contexto.Entry(itemm.producto).State = EntityState.Modified;
-
-                itemm.producto.Existencia += itemm.Cantidad;
-            }      
-
         }
 
-            _contexto.Empacados.Remove(entradaEmpacado);
-            paso = _contexto.SaveChanges() > 0;
-            _contexto.Entry(entradaEmpacado).State = EntityState.Detached;
+        var producido = _contexto.producto.Find(empacados.ProductoId);
+
+        if (producido != null)
+        {      
+            producido.Existencia -= empacados.Cantidad;
+            _contexto.Entry(producido).State = EntityState.Modified;
+        }
+
+        _contexto.Entry(empacados).State = EntityState.Deleted;
+        paso = _contexto.SaveChanges() > 0;
+        _contexto.Entry(empacados).State = EntityState.Detached;
 
 
         }

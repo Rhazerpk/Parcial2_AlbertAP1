@@ -237,19 +237,20 @@
 
     public void Eliminar() 
     {
-
-    if (productoEmpacadosBll.Eliminar(productoEmpacados.EmpacadosId))
-    {
-        this.productoEmpacados = new ProductoEmpacados();
-        this.empacadosDetalle = new EmpacadosDetalle();
-        notifications.ShowNotification("Fue eliminado correctamente.");
-        
-    }
-    else
-    {
-        notifications.ShowNotification("No fue eliminado, intentar nuevamente.", NotificationSeverity.Error);
-    }
-
+        if (productoEmpacadosBll.Existe(productoEmpacados.EmpacadosId))
+        {
+           if(productoEmpacadosBll.Eliminar(productoEmpacados))
+           {
+                this.productoEmpacados = new ProductoEmpacados();
+                this.empacadosDetalle = new EmpacadosDetalle();
+                notifications.ShowNotification("Fue eliminado correctamente.");
+           }
+            
+        }
+        else
+        {
+            notifications.ShowNotification("No fue eliminado, intentar nuevamente.", NotificationSeverity.Error);
+        }
     }
     public void AgregarDetalle() 
     {  
