@@ -59,10 +59,10 @@ public class ProductoEmpacadosBLL{
             
             foreach (var item in productoEmpacado.EmpacadosDetalle) 
             {
-                _contexto.Entry(item).State = EntityState.Added;
-                _contexto.Entry(item.producto).State = EntityState.Modified;
-
+                
                 item.producto.Existencia -= item.Cantidad;
+                _contexto.Entry(item.producto).State = EntityState.Modified;
+ 
             }
 
             var itemm = _contexto.producto.Find(productoEmpacado.ProductoId); 
@@ -75,6 +75,7 @@ public class ProductoEmpacadosBLL{
             }
                 _contexto.Empacados.Add(productoEmpacado);
                 paso = _contexto.SaveChanges() > 0;
+                _contexto.Entry(productoEmpacado).State = EntityState.Detached;
 
         }
         catch (Exception)
@@ -111,43 +112,55 @@ public class ProductoEmpacadosBLL{
 
         if(lista != null)
         {
-                
+
+            foreach(var item in lista.EmpacadosDetalle)
+            {
+                var producto = _contexto.producto.Find(item.EmpacadosDetalleId);
+
+                if(producto != null)
+                {
+                    producto.Existencia += item.Cantidad;
+                    _contexto.Entry(producto).State = EntityState.Modified;
+                }
+            }
+
+            var producidoAntiguo = _contexto.producto.Find(lista.ProductoId);
+
+            if(producidoAntiguo != null)
+            {
+                producidoAntiguo.Existencia -= lista.Cantidad;
+                _contexto.Entry(producidoAntiguo).State = EntityState.Modified;
+            }
+
+        }
+        
+            _contexto.Database.ExecuteSqlRaw($"Delete FROM EmpacadosDetalle where EmpacadosId={productoEmpacado.EmpacadosId}");
+
+            foreach(var nuevo in productoEmpacado.EmpacadosDetalle)
+            {
+                var producto = _contexto.producto.Find(nuevo.EmpacadosDetalleId);
+
+                if(producto != null)
+                {
+                    producto.Existencia -= nuevo.Cantidad;
+                    _contexto.Entry(nuevo).State = EntityState.Added;
+                }
+            }
+
             var _item = _contexto.producto.Find(productoEmpacado.ProductoId);
 
             if(_item != null)
             {
 
                 _item.Existencia += productoEmpacado.Cantidad; 
+                _contexto.Entry(_item).State = EntityState.Modified;
 
             }
-
-            _contexto.Entry(lista).State = EntityState.Detached;
-
-        _contexto.Database.ExecuteSqlRaw($"Delete FROM EmpacadosDetalle where EmpacadosId={productoEmpacado.EmpacadosId}");
-
-        foreach (var item in productoEmpacado.EmpacadosDetalle)
-        {
-            
-            _contexto.Entry(item).State = EntityState.Added;
-            _contexto.Entry(item.producto).State = EntityState.Modified;
-
-            item.producto.Existencia -= item.Cantidad;
-
-        }
-
-        var producido = _contexto.producto.Find(productoEmpacado.ProductoId);
-
-        if(producido != null)
-        {
-            producido.Existencia += productoEmpacado.Cantidad; 
-            
-        }
 
             _contexto.Entry(productoEmpacado).State = EntityState.Modified;
             paso = _contexto.SaveChanges() > 0;
             _contexto.Entry(productoEmpacado).State = EntityState.Detached;
-        }
-
+        
         }
         catch (Exception)
         {
@@ -164,6 +177,7 @@ public class ProductoEmpacadosBLL{
 
         try
         {
+            
         var entradaEmpacado = _contexto.Empacados.Find(id);
 
         if (entradaEmpacado != null)
@@ -183,12 +197,14 @@ public class ProductoEmpacadosBLL{
                 _contexto.Entry(itemm.producto).State = EntityState.Modified;
 
                 itemm.producto.Existencia += itemm.Cantidad;
-            }
-
-                _contexto.Empacados.Remove(entradaEmpacado);
-                paso = _contexto.SaveChanges() > 0;
+            }      
 
         }
+
+            _contexto.Empacados.Remove(entradaEmpacado);
+            paso = _contexto.SaveChanges() > 0;
+            _contexto.Entry(entradaEmpacado).State = EntityState.Detached;
+
 
         }
 

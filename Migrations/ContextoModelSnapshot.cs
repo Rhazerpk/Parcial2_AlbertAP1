@@ -118,7 +118,7 @@ namespace Parcial2_AP1Albert.Migrations
                             ProductoId = 1,
                             Costo = 75f,
                             Descripcion = "Maní",
-                            Existencia = 40f,
+                            Existencia = 50f,
                             Precio = 100f
                         },
                         new
@@ -126,7 +126,7 @@ namespace Parcial2_AP1Albert.Migrations
                             ProductoId = 2,
                             Costo = 80f,
                             Descripcion = "Pistachos",
-                            Existencia = 70f,
+                            Existencia = 50f,
                             Precio = 105f
                         },
                         new
@@ -134,7 +134,7 @@ namespace Parcial2_AP1Albert.Migrations
                             ProductoId = 3,
                             Costo = 90f,
                             Descripcion = "Ciruelas",
-                            Existencia = 30f,
+                            Existencia = 50f,
                             Precio = 125f
                         },
                         new
@@ -150,7 +150,7 @@ namespace Parcial2_AP1Albert.Migrations
                             ProductoId = 5,
                             Costo = 175f,
                             Descripcion = "Mixta",
-                            Existencia = 100f,
+                            Existencia = 50f,
                             Precio = 300f
                         });
                 });

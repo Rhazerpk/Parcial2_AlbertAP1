@@ -51,9 +51,9 @@ namespace Parcial2_AP1Albert.Migrations
                 {
                     EmpacadosDetalleId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    ProductoId = table.Column<int>(type: "INTEGER", nullable: false),
                     Cantidad = table.Column<float>(type: "REAL", nullable: false),
-                    EmpacadosId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ProductoId = table.Column<int>(type: "INTEGER", nullable: false)
+                    EmpacadosId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -99,11 +99,11 @@ namespace Parcial2_AP1Albert.Migrations
                 columns: new[] { "ProductoId", "Costo", "Descripcion", "Existencia", "Precio" },
                 values: new object[,]
                 {
-                    { 1, 75f, "Maní", 40f, 100f },
-                    { 2, 80f, "Pistachos", 70f, 105f },
-                    { 3, 90f, "Ciruelas", 30f, 125f },
+                    { 1, 75f, "Maní", 50f, 100f },
+                    { 2, 80f, "Pistachos", 50f, 105f },
+                    { 3, 90f, "Ciruelas", 50f, 125f },
                     { 4, 125f, "Arándanos", 50f, 175f },
-                    { 5, 175f, "Mixta", 100f, 300f }
+                    { 5, 175f, "Mixta", 50f, 300f }
                 });
 
             migrationBuilder.CreateIndex(

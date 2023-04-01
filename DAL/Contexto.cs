@@ -18,21 +18,21 @@ public class Contexto : DbContext{
                 Descripcion ="Maní",
                 Costo = 75,
                 Precio = 100,
-                Existencia = 40
+                Existencia = 50
             },
             new Productos{
                 ProductoId = 2,
                 Descripcion ="Pistachos",
                 Costo = 80,
                 Precio = 105,
-                Existencia = 70
+                Existencia = 50
             },
             new Productos{
                 ProductoId = 3,
                 Descripcion ="Ciruelas",
                 Costo = 90,
                 Precio = 125,
-                Existencia = 30
+                Existencia = 50
             },
             new Productos{
                 ProductoId = 4,
@@ -46,7 +46,7 @@ public class Contexto : DbContext{
                 Descripcion ="Mixta",
                 Costo = 175,
                 Precio = 300,
-                Existencia = 100
+                Existencia = 50
             }
         );
     }
