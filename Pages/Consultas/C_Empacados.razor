@@ -65,7 +65,6 @@
           <tbody>
                 @foreach (var item in lista)
                 {
-                    Fecha = DateOnly.FromDateTime(item.Fecha);
                     <tr>
                         <td>@item.EmpacadosId</td>                      
                         <td>@item.Concepto</td>                      
@@ -84,8 +83,8 @@
     #nullable disable 
     public string filtro { get; set; } 
     public string Criterio { get; set; } 
-    private DateTime fechaDesde { get; set; } = new DateTime(2000, 08, 2);
-    private DateTime fechaHasta { get; set; } = DateTime.Today;
+    private DateOnly fechaDesde { get; set; } = new DateOnly(2000, 08, 2);
+    private DateOnly fechaHasta { get; set; } = DateOnly.FromDateTime(DateTime.Now);
     private DateOnly Fecha { get; set; }
     public List<ProductoEmpacados> lista { get; set; } = new List<ProductoEmpacados>();
     public ProductoEmpacados empacados { get; set; }

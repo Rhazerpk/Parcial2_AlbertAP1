@@ -78,7 +78,7 @@ namespace Parcial2_AP1Albert.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("Fecha")
+                    b.Property<DateOnly>("Fecha")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("ProductoId")
@@ -157,7 +157,7 @@ namespace Parcial2_AP1Albert.Migrations
 
             modelBuilder.Entity("EmpacadosDetalle", b =>
                 {
-                    b.HasOne("ProductoEmpacados", "entradaEmpacado")
+                    b.HasOne("ProductoEmpacados", null)
                         .WithMany("EmpacadosDetalle")
                         .HasForeignKey("EmpacadosId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -168,8 +168,6 @@ namespace Parcial2_AP1Albert.Migrations
                         .HasForeignKey("ProductoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("entradaEmpacado");
 
                     b.Navigation("producto");
                 });

@@ -20,7 +20,7 @@ namespace Parcial2_AP1Albert.Migrations
                     EmpacadosId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     ProductoId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Fecha = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Fecha = table.Column<DateOnly>(type: "TEXT", nullable: false),
                     Concepto = table.Column<string>(type: "TEXT", nullable: false),
                     Cantidad = table.Column<int>(type: "INTEGER", nullable: false)
                 },
