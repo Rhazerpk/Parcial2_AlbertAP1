@@ -218,6 +218,10 @@
     }
     public void Guardar() 
     {
+        if(!Valido())
+        {
+            return;
+        }
         var guardo = productoEmpacadosBll.Guardar(productoEmpacados);
         
         if (guardo)
@@ -301,6 +305,18 @@
 
         this.productoEmpacados.EmpacadosDetalle.Remove(item);
         
+    }
+    public bool Valido()
+    {
+        bool valido = true; 
+
+         if (productoEmpacados.EmpacadosDetalle.Count < 1)
+        {
+            notifications.ShowNotification("Debes de agregar un producto." , NotificationSeverity.Warning);
+            return false;
+        }
+
+        return valido;
     }
 
 }
